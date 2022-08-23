@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="static//css//recommendation.css">
+    
+</head>
+<body>
+  <!-- <div class="center">
+    <form method="post" action="/search" type="text">
+        <input name="query">
+        <input type="submit">
+    </form>
+    </div> -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">PROACT</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/BCVS">BCVS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/competitors">Competitors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/male">Male Segment</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/female">Female Segment</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/">General News</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/graphs">Insights</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/social_media_analysis">Social Media Analysis</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/recommendation" tabindex="-1" aria-disabled="true">Recommendation</a>
+              </li>
+            </ul>
+  
+          </div>
+            <!--<form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <span class="input-group-btn"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></span>
+          </form>-->
+          <form class="form-inline" method="post" action="/search" type="text">
+            <input class="form-control mr-sm-1" type="search" placeholder="Search" name="query" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+    <form action="/recommendation" method="post" class = 'form-container'>
+        <input  type="text" placeholder="Name" name="name">
+        <input  type="email" placeholder="Email" name="email">
+        <input  type="number" placeholder="Age" name="age">
+        <input  type="number" placeholder="Capital" name="capital">
+        <input  type="number" placeholder="Duration (years)" name="duration">
+        <div>
+            <label> Risk:  </label>
+            <label class="radio-inline">
+              <input type="radio" name="optradio" checked>  Low
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="optradio">  Medium
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="optradio">  High
+            </label>
+        </div>
+        <div>
+            <label> Sex:  </label>
+            <label class="radio-inline">
+              <input type="radio" name="gender" checked>  Male
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="gender">  Female
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="gender">  Other
+            </label>
+        </div>
+        <div>
+            <label> Civil Status  </label>
+            <label class="radio-inline">
+              <input type="radio" name="civil" checked>  Married
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="civil">  Single
+            </label>
+        </div>
+          <input  type="number" placeholder="Target (Percentage)" name="percentage">
+          <label> </label>
+          <button class = " btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
+        </div>
+    </form>
+
+    <div class = 'recommendation-container'>
+        <h6> Investment Recommendation: </h6>
+        {% for percentage, portfolio in portfolio %}
+            <p>{{percentage}}% {{portfolio}}</p>
+
+        {% endfor %}
+       
+    </div>
+
+    <div class="news-container" id="minute_div" >
+        {% for url, title, snippet, keywords, portfolio in zipped_output %}
+        
+        
+        <div class="wrap-iframe">
+                <h6><a href="{{url}}">{{title}}</a></h6>
+                <p><mark>{{portfolio}}</mark></p>
+                <p><strong>Keywords: </strong>
+                    {% for keyword in keywords %}
+                        <span>{{keyword}}  </span>
+                    {% endfor %}
+                </p>
+                <p><strong>Snippet: </strong>{{snippet}}</p>
+            </div>
+
+            {% endfor %}
+    </div>
+
+
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
